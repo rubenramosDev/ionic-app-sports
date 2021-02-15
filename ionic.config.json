@@ -1,0 +1,7 @@
+{
+  "name": "appSportif",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
