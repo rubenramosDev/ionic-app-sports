@@ -38,12 +38,12 @@ const routes = [
         component: Home
     },
     {
-        path: '/list-of-pronostics',
+        path: '/list-of-pronostics/:id',
         name: 'ListPronostics',
         component: PronosticList
     },
     {
-        path: '/detail-pronostics',
+        path: '/detail-pronostics/:id',
         name: 'DetailPronostics',
         component: PronosticDetail
     },

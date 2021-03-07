@@ -79,8 +79,8 @@ export default {
   },
   methods: {
     submitForm() {
-      console.log("hey");
       console.log(this.type);
+      this.$router.push(`/list-of-pronostics/${this.type}`);
     },
     login() {
       this.$router.push("/login");

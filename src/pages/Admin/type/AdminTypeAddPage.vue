@@ -4,7 +4,7 @@
       <ion-list>
         <ion-item>
           <ion-label position="floating">Type</ion-label>
-          <ion-input v-model="inputType" type="text"/>
+          <ion-input v-model="inputType" type="text" />
         </ion-item>
         <ion-button type="submit" expand="full" color="success">Add</ion-button>
       </ion-list>
@@ -15,30 +15,41 @@
 
 <script>
 import Layout from "../../../components/Layout.vue";
-import {IonLabel, IonList, IonItem, IonButton, IonInput} from "@ionic/vue";
+import { IonLabel, IonList, IonItem, IonButton, IonInput, toastController } from "@ionic/vue";
 import axios from "axios";
 
 export default {
   data() {
     return {
-      inputType: ""
-    }
+      inputType: "",
+    };
   },
-  components: {Layout, IonLabel, IonList, IonItem, IonButton, IonInput,},
+  components: { Layout, IonLabel, IonList, IonItem, IonButton, IonInput },
   methods: {
     submitForm() {
       console.log(this.inputType);
       let h = {
-        "type": this.inputType
-      }
-      axios.post("https://raxk1131.odns.fr/type", h)
-          .then(response => {
-            console.log(response);
-          }).catch(err => {
-        console.log(err);
-      });
+        type: this.inputType,
+      };
 
-    }
-  }
+      axios.post("https://raxk1131.odns.fr/type", h).then(
+        (response) => {
+          console.log(response);
+          this.toast("Deleted ! ");
+        },
+        (error) => {
+          console.log(error);
+          this.toast("Ups ! Something went wrong");
+        }
+      );
+    },
+    async toast(text) {
+      const toast = await toastController.create({
+        message: text,
+        duration: 3000,
+      });
+      await toast.present();
+    },
+  },
 };
 </script>

@@ -11,10 +11,11 @@
         {{ item.libelle }}
 
         <ion-button
-            @click='deleteType(item.id)'
-            shape="round"
-            slot="end"
-            color="danger">
+          @click="deleteType(item.id)"
+          shape="round"
+          slot="end"
+          color="danger"
+        >
           <ion-icon :icon="trashOutline"></ion-icon>
         </ion-button>
       </ion-item>
@@ -23,8 +24,14 @@
 </template>
 
 <script>
-import {add, trashOutline} from "ionicons/icons";
-import {IonItem, IonButton, IonIcon, IonList} from "@ionic/vue";
+import { add, trashOutline } from "ionicons/icons";
+import {
+  IonItem,
+  IonButton,
+  IonIcon,
+  IonList,
+  toastController,
+} from "@ionic/vue";
 
 import Layout from "../../../components/Layout.vue";
 import axios from "axios";
@@ -33,7 +40,7 @@ export default {
   data() {
     return {
       add,
-      trashOutline
+      trashOutline,
     };
   },
   components: {
@@ -54,11 +61,26 @@ export default {
   methods: {
     deleteType(id) {
       console.log(id);
-      axios.delete("http://raxk1131.odns.fr/type/" + id)
-          .then(response => {
-            console.log(response);
-          });
-    }
+      axios.delete("http://raxk1131.odns.fr/type/" + id).then(
+        (response) => {
+          console.log(response);
+          this.toast("Deleted ! ");
+          this.$router.push("/admin/types");
+        },
+        (error) => {
+          console.log(error);
+          this.toast("Ups ! Something went wrong");
+          this.$router.push("/admin/types");
+        }
+      );
+    },
+    async toast(text) {
+      const toast = await toastController.create({
+        message: text,
+        duration: 3000,
+      });
+      await toast.present();
+    },
   },
 };
 </script>

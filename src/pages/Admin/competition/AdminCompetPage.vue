@@ -25,7 +25,7 @@
 
 <script>
 import { add, trashOutline } from "ionicons/icons";
-import { IonItem, IonButton, IonIcon, IonList} from "@ionic/vue";
+import { IonItem, IonButton, IonIcon, IonList, toastController} from "@ionic/vue";
 
 import Layout from "../../../components/Layout.vue";
 import axios from "axios";
@@ -54,16 +54,23 @@ export default {
   },
   methods: {
     deleteCompetition(id) {
-      console.log(id);
-      axios
-        .delete("http://raxk1131.odns.fr/competitions/" + id)
-        .then((response) => {
-          console.response(response);
-          this.$ionic.toastController.create({
-            message: "Hello",
-            duration : 3000
-          });
-        });
+      axios.delete("http://raxk1131.odns.fr/competitions/" + id).then(
+        (response) => {
+          console.log(response);
+          this.toast("Deleted ! ");
+        },
+        (error) => {
+          console.log(error);
+          this.toast("Ups ! Something went wrong");
+        }
+      );
+    },
+    async toast(text) {
+      const toast = await toastController.create({
+        message: text,
+        duration: 4000,
+      });
+      await toast.present();
     },
   },
 };

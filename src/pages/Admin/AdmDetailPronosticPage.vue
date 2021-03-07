@@ -2,7 +2,7 @@
   <layout page-title="Adm - Pronostic detail">
     <ion-card>
       <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Serge_Gainsbourg_par_Claude_Truong-Ngoc_1981.jpg/290px-Serge_Gainsbourg_par_Claude_Truong-Ngoc_1981.jpg"
+        src="https://webunwto.s3.eu-west-1.amazonaws.com/2020-01/sport-congresse.jpg"
       />
       <ion-card-header>
         <ion-card-title>{{ loadPronostic.name }}</ion-card-title>
@@ -21,11 +21,20 @@
         <ion-col>2</ion-col>
       </ion-row>
     </ion-grid>
-    <ion-button expand="full" color="warning" @click="() => router.push(`/adm-modify-pronostic/${loadPronostic.id}`)">
+    <ion-button
+      expand="full"
+      color="warning"
+      @click="() => router.push(`/adm-modify-pronostic/${loadPronostic.id}`)"
+    >
       Edit
       <ion-icon :icon="createOutline"></ion-icon>
     </ion-button>
-    <ion-button type="submit" expand="full" color="danger">
+    <ion-button
+      type="submit"
+      expand="full"
+      color="danger"
+      @click="deleteProno()"
+    >
       Delete
       <ion-icon :icon="trashOutline"></ion-icon>
     </ion-button>
@@ -33,18 +42,27 @@
 </template>
 
 <script>
-import {IonCard, IonCardHeader, IonCardContent, IonGrid, IonRow, IonCol} from "@ionic/vue";
-import {createOutline, trashOutline} from "ionicons/icons";
+import {
+  IonCard,
+  IonCardHeader,
+  IonCardContent,
+  IonGrid,
+  IonRow,
+  IonCol,
+  toastController,
+} from "@ionic/vue";
+import { createOutline, trashOutline } from "ionicons/icons";
 
 import Layout from "@/components/Layout.vue";
-import {useRouter} from "vue-router";
+import { useRouter } from "vue-router";
+import axios from "axios";
 
 export default {
   data() {
     return {
       pronosticId: this.$route.params.id,
       createOutline,
-      trashOutline
+      trashOutline,
     };
   },
   components: {
@@ -58,7 +76,7 @@ export default {
   },
   setup() {
     const router = useRouter();
-    return {router};
+    return { router };
   },
   computed: {
     loadPronostic() {
@@ -68,6 +86,29 @@ export default {
   watch: {
     $route(currentRoute) {
       this.pronosticId = currentRoute.params.id;
+    },
+  },
+  methods: {
+    deleteProno() {
+      axios
+        .delete(`http://raxk1131.odns.fr/pronostics/${this.pronosticId}`)
+        .then(
+          () => {
+            this.toast(`Pronostic deleted !`);
+            this.$router.push(`/admin/pronostics`);
+          },
+          () => {
+            this.toast("Ups ! Something went wrong");
+            this.$router.push(`/admin/pronostics`);
+          }
+        );
+    },
+    async toast(text) {
+      const toast = await toastController.create({
+        message: text,
+        duration: 3000,
+      });
+      await toast.present();
     },
   },
 };

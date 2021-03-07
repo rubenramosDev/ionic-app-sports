@@ -26,6 +26,9 @@ const store = createStore({
         setTypes(state, pronosticsData) {
             state.types = pronosticsData;
         },
+        settingUser(state, data) {
+            state.user = data;
+        },
     },
     actions: {
         getAllPronostics(context) {
@@ -47,17 +50,20 @@ const store = createStore({
                     context.commit("setCompetitions", reponse.data)
                 });
         },
-        getPronosticByCategory(context) {
-            axios.get("http://raxk1131.odns.fr/types/1/pronostics")
+        getPronosticByCategory(context, id) {
+            axios.get(`http://raxk1131.odns.fr/types/${id}/pronostics`)
                 .then(reponse => {
                     context.commit("setPronosticsBySport", reponse.data)
                 });
         },
-        getPronosticById(context) {
-            axios.get("http://raxk1131.odns.fr/pronostics/1")
+        getPronosticById(context, id) {
+            axios.get(`http://raxk1131.odns.fr/pronostics/${id}`)
                 .then(reponse => {
                     context.commit("setPronosticsById", reponse.data)
                 });
+        },
+        settingUser(context, data) {
+            context.commit("settingUser", data)
         }
     },
     getters: {
@@ -80,6 +86,9 @@ const store = createStore({
             return (pronosticId) => {
                 return state.pronostics.find((item) => item.id == pronosticId);
             }
+        },
+        user(state) {
+            return state.user;
         }
     }
 });

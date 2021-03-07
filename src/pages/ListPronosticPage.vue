@@ -21,13 +21,23 @@ export default {
     IonList,
     PronosticListItem,
   },
+  data() {
+    return {
+      categoryId: this.$route.params.id,
+    };
+  },
   computed: {
     pronostics() {
       return this.$store.getters.pronosticsBySport;
     },
   },
   created() {
-    this.$store.dispatch("getPronosticByCategory");
+    this.$store.dispatch("getPronosticByCategory", this.categoryId);
+  },
+  watch: {
+    $route(currentRoute) {
+      this.categoryId = currentRoute.params.id;
+    },
   },
 };
 </script>

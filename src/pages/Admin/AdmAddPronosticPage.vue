@@ -4,15 +4,17 @@
       <ion-list>
         <ion-item>
           <ion-label position="floating">Title</ion-label>
-          <ion-input v-model="inputTitle" type="text"/>
+          <ion-input v-model="inputTitle" type="text" />
         </ion-item>
 
         <ion-item>
           <ion-label>Type</ion-label>
           <ion-select placeholder="Select" v-model="inputType">
-            <ion-select-option v-for="item in types" :key="item.id" v-bind:value="item.id">{{
-                item.libelle
-              }}
+            <ion-select-option
+              v-for="item in types"
+              :key="item.id"
+              v-bind:value="item.id"
+              >{{ item.libelle }}
             </ion-select-option>
           </ion-select>
         </ion-item>
@@ -20,9 +22,11 @@
         <ion-item>
           <ion-label>Competition</ion-label>
           <ion-select placeholder="Select" v-model="inputCompetition">
-            <ion-select-option v-for="item in competitions" :key="item.id" v-bind:value="item.id">{{
-                item.competition
-              }}
+            <ion-select-option
+              v-for="item in competitions"
+              :key="item.id"
+              v-bind:value="item.id"
+              >{{ item.competition }}
             </ion-select-option>
           </ion-select>
         </ion-item>
@@ -38,7 +42,7 @@
 
         <ion-item>
           <ion-label position="floating">Cost</ion-label>
-          <ion-input v-model="inputCost" type="text"/>
+          <ion-input v-model="inputCost" type="text" />
         </ion-item>
 
         <ion-item>
@@ -56,19 +60,40 @@
 <script>
 import Layout from "@/components/Layout.vue";
 import {
-  IonLabel, IonSelectOption, IonSelect, IonList, IonItem, IonButton, IonInput, IonTextarea,
+  IonLabel,
+  IonSelectOption,
+  IonSelect,
+  IonList,
+  IonItem,
+  IonButton,
+  IonInput,
+  IonTextarea,
+  toastController
 } from "@ionic/vue";
 import axios from "axios";
 
 export default {
-
   data() {
     return {
-      inputTitle: "", inputType: "", inputCompetition: "", inputCost: "", inputAnalyse: "", inputProno: "", flag: false
-    }
+      inputTitle: "",
+      inputType: "",
+      inputCompetition: "",
+      inputCost: "",
+      inputAnalyse: "",
+      inputProno: "",
+      flag: false,
+    };
   },
   components: {
-    Layout, IonSelect, IonSelectOption, IonLabel, IonList, IonItem, IonButton, IonInput, IonTextarea,
+    Layout,
+    IonSelect,
+    IonSelectOption,
+    IonLabel,
+    IonList,
+    IonItem,
+    IonButton,
+    IonInput,
+    IonTextarea,
   },
   computed: {
     competitions() {
@@ -77,33 +102,43 @@ export default {
     types() {
       return this.$store.state.types;
     },
-
   },
   created() {
     this.$store.dispatch("getAllTypes"),
-        this.$store.dispatch("getAllCompetitions");
+      this.$store.dispatch("getAllCompetitions");
   },
   methods: {
     submitForm() {
       console.log("hey");
-      let data =
-          {
-            "name": this.inputTitle,
-            "typeId": this.inputType,
-            "competitionId": this.inputCompetition,
-            "analyse": this.inputAnalyse,
-            "cote": this.inputCost,
-            "resultat": this.inputAnalyse,
-            "res_prono": this.inputProno
-          };
+      let data = {
+        name: this.inputTitle,
+        typeId: this.inputType,
+        competitionId: this.inputCompetition,
+        analyse: this.inputAnalyse,
+        cote: this.inputCost,
+        resultat: this.inputAnalyse,
+        res_prono: this.inputProno,
+      };
       console.log(data);
-      axios.post("http://raxk1131.odns.fr/pronostics/", data)
-          .then(response => {
-            this.flag = true;
-            console.log(this.flag);
-            console.log(response);
-          });
-    }
-  }
-}
+      axios.post("http://raxk1131.odns.fr/pronostics/", data).then(
+        () => {
+          this.flag = true;
+          this.toast(`Pronostic added !`);
+          this.$router.push(`/admin/pronostics`);
+        },
+        () => {
+          this.toast("Ups ! Something went wrong");
+          this.$router.push(`/admin/pronostics`);
+        }
+      );
+    },
+    async toast(text) {
+      const toast = await toastController.create({
+        message: text,
+        duration: 3000,
+      });
+      await toast.present();
+    },
+  },
+};
 </script>
