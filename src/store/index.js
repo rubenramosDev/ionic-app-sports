@@ -64,6 +64,9 @@ const store = createStore({
         },
         settingUser(context, data) {
             context.commit("settingUser", data)
+        },
+        logout(){
+            this.state.user = undefined;
         }
     },
     getters: {

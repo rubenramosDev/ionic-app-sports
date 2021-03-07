@@ -1,18 +1,27 @@
 <template>
   <layout page-title="Pronostic detail">
     <ion-card>
-      <img
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Serge_Gainsbourg_par_Claude_Truong-Ngoc_1981.jpg/290px-Serge_Gainsbourg_par_Claude_Truong-Ngoc_1981.jpg"
-      />
+      <img src="https://www.rankonesport.com/content/Images/hero-bg.jpg" />
       <ion-card-header>
-        <!--  <ion-card-title>{{ hola.name }}</ion-card-title> -->
-        <ion-card-subtitle>{{ hola.type }}</ion-card-subtitle> 
+        <ion-card-subtitle>
+          {{ this.pronosticCompetition }} |
+          {{ this.pronosticType }}</ion-card-subtitle
+        >
+        <ion-card-title>{{ this.pronosticName }}</ion-card-title>
+        <ion-card-title>Cost - ${{ this.pronosticCote }}</ion-card-title>
       </ion-card-header>
 
       <ion-card-content>
-        <!-- {{ hola.analyse }} -->
+        {{ this.pronosticAnalyse }}
       </ion-card-content>
     </ion-card>
+    <ion-card-title> Pronostic result : </ion-card-title>
+    <ion-card-subtitle> {{ this.pronosticResultat }} </ion-card-subtitle>
+    <hr />
+    <ion-card-title> Pronostic :</ion-card-title>
+    <ion-chip>
+      <ion-label color="primary">{{ this.pronosticResprono }}</ion-label>
+    </ion-chip>
   </layout>
 </template>
 
@@ -21,6 +30,8 @@ import {
   IonCard,
   IonCardHeader,
   IonCardContent,
+  IonChip,
+  IonLabel,
 } from "@ionic/vue";
 import Layout from "@/components/Layout.vue";
 
@@ -30,19 +41,24 @@ export default {
     IonCard,
     IonCardHeader,
     IonCardContent,
+    IonChip,
+    IonLabel,
   },
   data() {
     return {
       pronosticId: this.$route.params.id,
+      pronosticName: this.$route.params.name,
+      pronosticCote: this.$route.params.cote,
+      pronosticResprono: this.$route.params.resprono,
+      pronosticResultat: this.$route.params.resultat,
+      pronosticCompetition: this.$route.params.competition,
+      pronosticType: this.$route.params.type,
+      pronosticAnalyse: this.$route.params.analyse,
     };
   },
-  computed: {
-    hola() {
-      return this.$store.getters.pronosticById;
-    },
-  },
   created() {
-    this.$store.dispatch("getPronosticById", this.pronosticId);
+    console.log("hola 2");
+    return this.$store.dispatch("getPronosticById", this.pronosticId);
   },
   watch: {
     $route(currentRoute) {

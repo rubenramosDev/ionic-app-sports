@@ -46,11 +46,11 @@ export default {
             this.toast(`Correct credentials, login as ${type}`);
 
             if (!type.localeCompare("admin")) {
+              this.$store.dispatch("settingUser", type);
               this.$router.push("/admin/home");
-              this.$store.dispatch("settingUser", type);
             } else {
-              this.$router.push("/login");
               this.$store.dispatch("settingUser", type);
+              this.$router.push("/list-of-pronostics/1");
             }
           },
           (error) => {

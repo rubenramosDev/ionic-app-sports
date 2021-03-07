@@ -1,24 +1,26 @@
 <template>
   <layout page-title="Account">
-    <form @submit.prevent="submitForm">
-      <ion-list>
-        <ion-item>
-          <ion-label position="floating">Nom utilisateur</ion-label>
-          <ion-input v-model="inputTitle" type="text"/>
-        </ion-item>
-
-      </ion-list>
-      <ion-button type="submit" expand="full" color="danger">Log out</ion-button>
-    </form>
+    <ion-list>
+      <ion-item>Log in as Admin </ion-item>
+    </ion-list>
+    <ion-button type="submit" expand="full" color="danger" @click="logout()"
+      >Log out</ion-button
+    >
   </layout>
 </template>
 
 
 <script>
 import Layout from "@/components/Layout.vue";
-import {IonLabel, IonList, IonItem, IonButton, IonInput} from '@ionic/vue';
+import { IonList, IonItem, IonButton } from "@ionic/vue";
 
 export default {
-  components: {Layout, IonLabel, IonList, IonItem, IonButton, IonInput},
+  components: { Layout, IonList, IonItem, IonButton },
+  methods: {
+    logout() {
+      this.$store.dispatch("logout");
+      this.$router.push("/home");
+    },
+  },
 };
 </script>

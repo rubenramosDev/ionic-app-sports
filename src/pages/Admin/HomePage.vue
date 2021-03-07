@@ -1,6 +1,6 @@
 <template>
   <layout page-title="Home">
-      <h4>Welcome !</h4>
+      <h4>Welcome Admin!</h4>
   </layout>
 </template>
 

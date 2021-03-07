@@ -43,7 +43,7 @@ const routes = [
         component: PronosticList
     },
     {
-        path: '/detail-pronostics/:id',
+        path: '/detail-pronostics/:id/:name/:cote/:resprono/:resultat/:competition/:type/:analyse',
         name: 'DetailPronostics',
         component: PronosticDetail
     },
