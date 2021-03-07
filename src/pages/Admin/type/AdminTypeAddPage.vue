@@ -35,11 +35,13 @@ export default {
       axios.post("https://raxk1131.odns.fr/type", h).then(
         (response) => {
           console.log(response);
-          this.toast("Deleted ! ");
+          this.toast("Type added ! Refresh page ");
+          this.$router.push("/admin/types");
         },
         (error) => {
           console.log(error);
           this.toast("Ups ! Something went wrong");
+          this.$router.push("/admin/types");
         }
       );
     },

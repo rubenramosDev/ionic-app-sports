@@ -48,7 +48,7 @@ export default {
       };
       axios.post("https://raxk1131.odns.fr/competitions", h).then(
         () => {
-          this.toast("Deleted ! ");
+          this.toast("Deleted ! Refresh page");
           this.$router.push("/admin/competitions");
         },
         () => {

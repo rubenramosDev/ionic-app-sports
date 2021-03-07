@@ -68,7 +68,7 @@ const routes = [
         component: AdmDetailPronostic
     },
     {
-        path: '/adm-modify-pronostic/:id',
+        path: '/adm-modify-pronostic/:id/:name/:typeId/:competitionId/:analyse/:cote/:resultat/:res_prono',
         name: 'AdmModifyPronostic',
         component: AdmModifyPronosticPage
     },

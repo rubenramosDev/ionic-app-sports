@@ -123,7 +123,7 @@ export default {
       axios.post("http://raxk1131.odns.fr/pronostics/", data).then(
         () => {
           this.flag = true;
-          this.toast(`Pronostic added !`);
+          this.toast(`Pronostic added ! Refresh page`);
           this.$router.push(`/admin/pronostics`);
         },
         () => {

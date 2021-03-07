@@ -24,7 +24,7 @@
     <ion-button
       expand="full"
       color="warning"
-      @click="() => router.push(`/adm-modify-pronostic/${loadPronostic.id}`)"
+      @click="() => router.push(`/adm-modify-pronostic/${loadPronostic.id}/${loadPronostic.name}/${loadPronostic.typeId}/${loadPronostic.competitionId}/${loadPronostic.analyse}/${loadPronostic.cote}/${loadPronostic.resultat}/${loadPronostic.res_prono}`)"
     >
       Edit
       <ion-icon :icon="createOutline"></ion-icon>

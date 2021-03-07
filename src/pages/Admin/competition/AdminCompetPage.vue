@@ -57,7 +57,7 @@ export default {
       axios.delete("http://raxk1131.odns.fr/competitions/" + id).then(
         (response) => {
           console.log(response);
-          this.toast("Deleted ! ");
+          this.toast("Deleted ! Refresh page");
         },
         (error) => {
           console.log(error);
