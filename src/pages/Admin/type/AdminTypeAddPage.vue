@@ -32,7 +32,7 @@ export default {
         type: this.inputType,
       };
 
-      axios.post("https://raxk1131.odns.fr/type", h).then(
+      axios.post("http://raxk1131.odns.fr/type", h).then(
         (response) => {
           console.log(response);
           this.toast("Type added ! Refresh page ");

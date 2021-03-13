@@ -32,6 +32,7 @@ export default {
     },
   },
   created() {
+    console.log("smn");
     this.$store.dispatch("getPronosticByCategory", this.categoryId);
   },
   watch: {

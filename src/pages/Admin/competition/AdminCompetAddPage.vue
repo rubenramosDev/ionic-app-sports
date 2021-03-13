@@ -46,9 +46,9 @@ export default {
       let h = {
         competition: this.inputCompetition,
       };
-      axios.post("https://raxk1131.odns.fr/competitions", h).then(
+      axios.post("http://raxk1131.odns.fr/competitions", h).then(
         () => {
-          this.toast("Deleted ! Refresh page");
+          this.toast("New competiton added ! Refresh page");
           this.$router.push("/admin/competitions");
         },
         () => {
